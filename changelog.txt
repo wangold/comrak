@@ -1,0 +1,303 @@
+### 0.18.0
+
+* Improve performance of bundled plugins, and streaming I/O by @kivikakk in https://github.com/kivikakk/comrak/pull/288
+* Implement Default for enums without using #[default] attribute by @silverpill in https://github.com/kivikakk/comrak/pull/293
+* XML and sourcepos support by @kivikakk in https://github.com/kivikakk/comrak/pull/232
+* Add a quadratic fuzzer by @philipturnbull in https://github.com/kivikakk/comrak/pull/295
+
+### 0.17.1
+
+* Fix some panics found by trivial fuzzing.
+
+Missed from the 0.17.0 changelog:
+
+* Add footnote attributes that mirror cmark-gfm by @digitalmoksha in https://github.com/kivikakk/comrak/pull/273
+* Add support for full_info_string render option by @digitalmoksha in https://github.com/kivikakk/comrak/pull/276
+* chore: improve debug performance by @conradludgate in https://github.com/kivikakk/comrak/pull/283
+
+### 0.17.0
+
+This contains some breaking changes from an API point of view, but output is
+largely unchanged.  Spec compliance is improved, and benchmark runtime is over
+20% faster.
+
+* SECURITY: GHSA-8hqf-xjwp-p67v / Quadratic runtime when parsing Markdown (GHSL-2023-047)
+  * <https://github.com/kivikakk/comrak/security/advisories/GHSA-8hqf-xjwp-p67v>
+  * A variety of quadratic runtime issues that could lead to DoS were reported
+    and addressed.
+  * We replaced pest with an re2c-based scanner.
+* SECURITY: GHSA-xxmq-4vph-956w / Excessive output when parsing Markdown (GHSL-2023-048)
+  * <https://github.com/kivikakk/comrak/security/advisories/GHSA-xxmq-4vph-956w>
+  * Reference output is limited to 100Kb.
+* SECURITY: GHSA-5r3x-p7xx-x6q5 / Attacker controlled data in AST nodes is not validated (GHSL-2023-049)
+  * <https://github.com/kivikakk/comrak/security/advisories/GHSA-5r3x-p7xx-x6q5>
+  * AST nodes no longer store raw `Vec<u8>`s, and instead store `String`s.
+* Various API points were cleaned up.
+* Comrak now targets Rust 2018.
+
+Many thanks to @philipturnbull and @darakian of the GitHub Security Lab for
+bringing these issues to my attention and detailing the reproduction steps for
+each case.
+
+### 0.16.0
+
+* Track which symbol was used to mark task item as checked by @felipesere in https://github.com/kivikakk/comrak/pull/252
+* improve tagfilter performance by @fiji-flo in https://github.com/kivikakk/comrak/pull/256
+* [ShortCode] Add support for gemojis via shortcodes extension by @eklipse2k8 in https://github.com/kivikakk/comrak/pull/260
+* "mod three rule" fix by @kivikakk in https://github.com/kivikakk/comrak/pull/262
+* Add `shortcodes` to the README by @gjtorikian in https://github.com/kivikakk/comrak/pull/263
+* Cargo.toml: remove timebomb by @kivikakk in https://github.com/kivikakk/comrak/pull/264
+* Add custom heading adapter by @lucperkins in https://github.com/kivikakk/comrak/pull/266
+* Keep track of "^" symbol when within footnotes by @gjtorikian in https://github.com/kivikakk/comrak/pull/274
+
+### 0.15.0
+
+* table: fix start_line of Table itself by @kivikakk in https://github.com/kivikakk/comrak/pull/231
+* Rename header file to match c libname by @gjtorikian in https://github.com/kivikakk/comrak/pull/233
+* Change the name of the ifdef by @gjtorikian in https://github.com/kivikakk/comrak/pull/234
+* Add `comrak_set_parse_option_smart` by @gjtorikian in https://github.com/kivikakk/comrak/pull/235
+* Allow `c_char` options to be NULL by @gjtorikian in https://github.com/kivikakk/comrak/pull/237
+* Replace `lazy_static` dependency with `once_cell` by @Turbo87 in https://github.com/kivikakk/comrak/pull/238
+* Make `comrak --help` readable on my terminal by @mgeisler in https://github.com/kivikakk/comrak/pull/242
+* c-api: fix CI build by @kivikakk in https://github.com/kivikakk/comrak/pull/240
+* Bump versions of some dependencies by @helmet91 in https://github.com/kivikakk/comrak/pull/243
+* Adding functionality to build SyntectAdapters with custom themes, syntax sets, etc. by @ArvinSKushwaha in https://github.com/kivikakk/comrak/pull/239
+* Make shell-words and xdg dependencies optional by @silverpill in https://github.com/kivikakk/comrak/pull/245
+* Bump clap version to 4.0 and switch to the Derive API by @tranzystorek-io in https://github.com/kivikakk/comrak/pull/248
+* c-api: remove by @kivikakk in https://github.com/kivikakk/comrak/pull/249
+
+### 0.14.0
+
+* Add C FFI, allowing Comrak to be used from other languages. (#171, Garen
+  Torikian)
+* Fix line wrapping in CommonMark output. (#228, Edward Loveall)
+* Add option to specify character used for unordered list bullets in
+  CommonMark output. (#229, Edward Loveall)
+
+### 0.13.2
+
+* Fix Windows build.
+
+### 0.13.1
+
+* Support compiling for WASM. (#222, Ben Wishoshavich)
+* Replace deprecated twoway dependency. (#224)
+
+### 0.13.0
+
+* SECURITY: Bump regex to 1.5.5. (#221, Dependabot)
+* Drop unneeded YAML dependency from Syntect. (#199, Chris Wong)
+* Match newline handling in code inlines to upstream, and improve test failure
+  reporting. (#210, Michael Anderson)
+* Make all node value fields public. (#216, Evan Schwartz)
+* Line break handling adjustments. (#214, Michael Anderson)
+* Disable control characters in link definitions. (#219, Michael Anderson)
+
+### 0.12.1
+
+* Only load syntax and theme sets once, on Syntect plugin instantiation. (#197)
+* Match syntax highlighting language names more loosely. (#198)
+
+### 0.12.0
+
+* Add pluggable syntax highlighting, and default implementation with syntect.
+  (Daniel Simon, #194)
+
+### 0.11.0
+
+* Allow short URLs even with non-empty path. (#191, Bernard Teo)
+* Expose NodeCode struct in AST. (#192, Vojtech Kral)
+
+### 0.10.1
+
+* SECURITY: it was possible to smuggle unsafe URLs --- like `javascript:` ones
+  --- even without using the "unsafe" mode of operation.  Thanks to Sam Sanoop
+  (snoopysecurity) for reporting.
+* Recognise tables without a preceding newline. (#183)
+
+### 0.10.0
+
+* 0.9.1 was a semver-breaking change.
+* Add -o/--output CLI option. (#177)
+
+### 0.9.1
+
+* SECURITY: we were matching unsafe URL prefixes, such as `data:` or
+  `javascript:`, in a case-sensitive manner.  This meant prefixes like `Data:`
+  were untouched.  Please upgrade as soon as possible.  (Kouhei Morita)
+* Add support for ignoring front matter. (#170, Eitan Mosenkis.)
+
+### 0.9.0
+
+* 0.8.2 was a semver-breaking change, so we're now bumping to 0.9.0.  Some
+  tests have been added to catch this in future.
+* Allow image/ prefix on data URIs. (#169, Daniel Sorichetti)
+
+### 0.8.2
+
+* Fix some lint issues. (#152, Caleb Maclennan)
+* Build benchmarks separately to tests. (#154)
+* Add support for a config file for CLI use. (#157, with thanks to AJ ONeal.)
+
+### 0.8.1
+
+* Add escape option to escape raw HTML instead of clobbering it. (#150, Ryan
+  Westlund)
+
+### 0.8.0
+
+* 0.7.1 was a semver-breaking change.  This is now 0.8.0.
+
+### 0.7.1
+
+* Reduce list item indentation in line with spec. (#135, Casey Rodarmor)
+* Split uber-struct ComrakOptions into substructures.
+* Refactor HTML formatter escaping. (#140, Donough Liu)
+* Don't render <p> inside <dt> tags. (#145)
+
+### 0.7.0
+
+* Supporting stable and newer again, since dependencies keep breaking for
+  1.27.0. (#134)
+
+### 0.6.2
+
+* Exclude unneeded files from crate. (#120, Igor Gnatenko)
+* Bump the twoway dependency. (#121, Igor Gnatenko)
+
+### 0.6.1
+
+* Add --gfm flag to CLI to enable all GitHub Flavored Markdown extensions and
+  options. (#118, James R Miller)
+
+### 0.6.0
+
+* Add TaskItem variant to NodeValue. (#115, Élisabeth Henry)
+
+### 0.5.1
+
+* Support building on Rust versions back to 1.27.0. (#114)
+
+### 0.5.0
+
+* Update API so that footnote reference and definition identifiers match.
+  (#110, Élisabeth Henry)
+* Update to CommonMark spec 0.29. (#112)
+
+### 0.4.4
+
+* Add From<NodeValue> impl to AstNode. (#105, Sunjay Varma)
+
+### 0.4.3
+
+* Add a Default derive and Ast::new to make ASTs programmatically
+  constructible. (#101, Sunjay Varma and #102)
+
+### 0.4.2
+
+* Add a callback to fill in broken reference links, per pulldown_cmark's
+  Parser::new_with_broken_link_callback. (#100, Sunjay Varma)
+* Update to latest spec.  (#99)
+
+### 0.4.1
+
+* Fix a bug in anchor generation; it should now be on par with GitHub's. (#97, Clifford T. Matthews)
+* Expose anchor generation for use in library consumers. (#94, Clifford T. Matthews)
+
+### 0.4.0
+
+* Invert default-false `safe` flag to default-false `unsafe_` flag.  If you
+  were not enabling safe mode before, you'll need to enable unsafe mode now.
+
+### 0.3.1
+
+* Keep up-to-date with the spec.
+
+### 0.3.0
+
+* Significant test coverage and code clean up. (#82, #83, Brian Anderson)
+* Description list support. (#86, Ayose Cazorla)
+* Example use of comrak to convert CommonMark documents into S-expressions. (#86, Ayose Cazorla)
+* Footnotes are now enabled via an extension option, not a flag of its own. (#87)
+* Extend `cmark-gfm` compatibility to include all extension and regression tests. (#87)
+
+### 0.2.14
+
+* Speed enhancements. (#76, Brian Anderson)
+* Target latest spec; bring comrak closer into line with cmark. (#81, Brian Anderson and Ashe Connor)
+
+### 0.2.13
+
+* Speed enhancements. (#75, Shaquille Johnson)
+
+### 0.2.12
+
+* Add safety options per the reference C implementation. (#67)
+
+### 0.2.11
+
+* Expose Arena type so users don't need to bring it in themselves (#66, Vincent
+  Prouillet).
+
+### 0.2.10
+
+* Bring up to date with latest spec.
+* Fix parsing of tables nested in other block elements (#61, Brian Anderson).
+* Protect against stack smashing in inline processors and CommonMark and HTML
+  formatters (#63, Brian Anderson).
+
+### 0.2.9
+
+* Fix a corner case in the ATX header parser (#53, Brian Anderson).
+* Fix grammar for scanning table marker rows (#55, Brian Anderson).
+* Add smart punctuation (#57).
+
+### 0.2.8
+
+* Add `default-info-string` argument/option to specify a default language in fenced
+  code blocks. (Thanks to @steveklabnik for the suggestion.)
+
+### 0.2.7
+
+* Use [`pest`](https://github.com/pest-parser/pest) instead of regexes for lexing.
+
+### 0.2.6
+
+* Fixed a bug where back-to-back emphases would not be processed correctly.
+  (#45; thanks to @SSJohns for the report.)
+
+### 0.2.5
+
+* Fixed a bug where an exclamation mark "!" followed by a footnote would be
+  eaten by the parser.
+
+### 0.2.4
+
+* Added footnotes support.
+
+### 0.2.3
+
+* Added header IDs extension.
+
+### 0.2.2
+
+* Fix for pathological reference link parsing.
+
+### 0.2.1
+
+* Speed optimisations.
+
+### 0.2.0
+
+* The formatters no longer produce Strings themeselves; you must specify an
+  output stream.
+* Speed up whitespace normalisation.
+
+### 0.1.9
+
+* Multibyte character fix for autolink (#35, Shaquille Johnson).
+* Resolve panics with tables in awkward situations (#36).
+
+### 0.1.8
+
+* Fix possible DoS in link parsing (#33, Demi Obenour).
